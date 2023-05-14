@@ -8,23 +8,6 @@ import scipy
 from scipy import stats
 from sas7bdat import SAS7BDAT
 
-
-
-def unique(list1):
-    unique_list = []
-
-    for x in list1:
-        if x not in unique_list:
-            unique_list.append(x)
-    return unique_list
-
-
-def listsum(list):
-    s = 0
-    for i in list:
-        s += i
-    return s
-
 def make_lables(values_clusters_maked, mark, t):
     values_classes_maked = []
     for k in range(len(values_clusters_maked[mark].unique()) + 1):
@@ -120,7 +103,7 @@ for i in num[:12]:
     for eps in range(-10,10):
         for ms in range(num_sam - int(num_sam/4), num_sam+int(num_sam/4)):
             clustering = DBSCAN(eps=distances[elbow_index]+distances[elbow_index]*eps/100, min_samples=ms).fit(df_fc)
-            if len(unique(clustering.labels_)) > 1:
+            if len(set(clustering.labels_)) > 1:
                 metr_dif = metrics.silhouette_score(df_fc, clustering.labels_)
                 if metr_dif > metr_d:
                     real_result_d = clustering
@@ -163,13 +146,4 @@ for i in num[:12]:
 
     corr_result[3].append(min(corr_result[1][-1], corr_result[2][-1]))
 
-print(corr_result[0])
-print(corr_result[1])
-print(corr_result[2])
-print(corr_result[3])
-for i in range(len(corr_result[0])):
-    print(corr_result[0][i])
-    print(corr_result[1][i])
-    print(corr_result[2][i])
-    print(corr_result[3][i])
 
